@@ -7,7 +7,7 @@ import firebase from 'firebase/compat/app';
 // import {firestore as db}  from './firebase-config' 
 // import firebase from './firebase-config';
 
-function ChatInput({ channelName, channelId }) {
+function ChatInput({ channelName, channelId, chatRef }) {
   const [input, setInput] = useState("");
 
   
@@ -23,7 +23,10 @@ function ChatInput({ channelName, channelId }) {
       user: "Akhona Silwana",
        userImage:"https://www.freepik.com/free-vector/smiling-girl-with-flowers-her-hair_9146884.htm#query=cartoon%20girl&position=27&from_view=keyword",
     });
-
+     
+       chatRef.current.scrollIntoView({
+            behavior: "smooth",
+        });
     setInput("");
   };
   return (
@@ -31,7 +34,7 @@ function ChatInput({ channelName, channelId }) {
       <form>
         <input value={input}
          onChange={(e) => setInput(e.target.value)}
-         placeholder={`Message #ROOM`} />
+         placeholder={`Message #${channelName}`} />
         <Button hidden type="submit" onClick={sendMessage}>
           SEND
         </Button>
