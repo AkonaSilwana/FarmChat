@@ -8,8 +8,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 function Sidebar() {
-  const [channels, loading, error, id] = useCollection(db.collection("rooms"));
+  const [channels] = useCollection(db.collection("rooms"));
+  const [user] = useAuthState(auth);
   return (
     <SidebarContainer>
       <SidebarHeader>
@@ -17,7 +20,7 @@ function Sidebar() {
           <h2>FARM MARKET</h2>
           <h3>
             <FiberManualRecordIcon />
-            User
+            {user.displayName}
           </h3>
         </SidebarInfo>
         <CreateIcon />
@@ -30,11 +33,7 @@ function Sidebar() {
       <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
 
       {channels?.docs.map((doc) => (
-        <SidebarOption
-          key={doc.id}
-          id={doc.id}
-          title={doc.data().name}
-        />
+        <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
       ))}
     </SidebarContainer>
   );
@@ -94,5 +93,3 @@ const SidebarInfo = styled.div`
     color: green;
   }
 `;
-
-

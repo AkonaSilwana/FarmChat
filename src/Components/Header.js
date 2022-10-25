@@ -4,30 +4,37 @@ import { Avatar } from '@material-ui/core'
 import AccessTimeIcon from "@material-ui/icons/AccessTime"
 import SearchIcon from "@material-ui/icons/Search"
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline"
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../firebase'
 
 function Header() {
+
+  const [user] = useAuthState(auth);
   return (
-   <HeaderContainer>
-  
-   <HeaderLeft>
-    <HeaderAvatar
-    />
-     <AccessTimeIcon/>
-   
-   </HeaderLeft>
+    <HeaderContainer>
 
-    
-    <HeaderSearch>
-     <SearchIcon />
-     <input placeholder='Search farmchat' />
+      <HeaderLeft>
+        <HeaderAvatar
+          onClick={() => auth.signOut()}
+          alt={user?.displayName}
+          src={user?.photoURL}
+        />
+        <AccessTimeIcon />
 
-    </HeaderSearch>
+      </HeaderLeft>
 
- 
-     <HeaderRight>
-       <HelpOutlineIcon />
-     </HeaderRight>
-   </HeaderContainer>
+
+      <HeaderSearch>
+        <SearchIcon />
+        <input placeholder='Search farmchat' />
+
+      </HeaderSearch>
+
+
+      <HeaderRight>
+        <HelpOutlineIcon />
+      </HeaderRight>
+    </HeaderContainer>
   )
 }
 
@@ -65,7 +72,7 @@ const HeaderSearch = styled.div`
  }
 `;
 
-const HeaderContainer= styled.div`
+const HeaderContainer = styled.div`
 display: flex;
 position: fixed;
 width: 100%;
@@ -76,7 +83,7 @@ background-color: var(--farm-color);
 color: white;
 `;
 
-const HeaderLeft= styled.div`
+const HeaderLeft = styled.div`
 flex: 0.3;
 display: flex;
 align-items: center;
