@@ -21,7 +21,8 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `buil![farmMarket](https://user-images.githubusercontent.com/109544433/198935523-56264e93-6cec-4de3-9d89-4dfe5e056e63.png)
+d` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.\
