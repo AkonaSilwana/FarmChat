@@ -20,6 +20,7 @@ Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
+ ![farmMarket](https://user-images.githubusercontent.com/109544433/198935788-526d11b6-7dac-4007-bf74-8be90e42d331.png)
 
 Builds the app for production to the `buil![farmMarket](https://user-images.githubusercontent.com/109544433/198935523-56264e93-6cec-4de3-9d89-4dfe5e056e63.png)
 d` folder.\
@@ -34,7 +35,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, ![farmMarket](https://user-images.githubusercontent.com/109544433/198935788-526d11b6-7dac-4007-bf74-8be90e42d331.png)
+If you aren't satisfied with the build tool and configuration choices,
 you can `eject` at any time. This command will remove the single build dependency from your project.
 
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
