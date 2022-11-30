@@ -9,6 +9,7 @@ import MaterialTable from 'material-table';
 import { useTheme } from "@mui/material/styles";
 import {useState} from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 function ListOfAuctions({ clickOpen, getOpen }) {
@@ -83,7 +84,9 @@ function ListOfAuctions({ clickOpen, getOpen }) {
             <td>{rowData.startTime}</td>
             <td>{rowData.endTime}</td>
             <td>
+              <Link path='/AuctionLink'>
               <button>Open Auction</button>
+              </Link>
             </td>
             </InputFieldStyle>
           </tr>
