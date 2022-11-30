@@ -1,12 +1,28 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import styled from "styled-components";
-import { auth, provider } from "../firebase";
+import { auth, db, provider } from "../firebase";
 
 function Login() {
   const signIn = (e) => {
     e.preventDefault();
-    auth.signInWithPopup(provider).catch((error) => alert(error.message));
+    auth.signInWithPopup(provider)
+    .then((resp) => {
+      //add users to db
+      console.log("user", resp);
+      db.collection("users")
+      .doc(resp.user.uid)
+      .set({
+        name: resp?.user?.displayName,
+        email: resp?.user?.email,
+        photo: resp?.user?.photoURL,
+      })
+      .then((abc) => {
+        console.log("user added to db", abc);
+      });
+    })
+    
+    .catch((error) => alert(error.message));
   };
   return (
     <LoginContainer>

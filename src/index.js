@@ -5,16 +5,19 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import { ProSidebarProvider } from 'react-pro-sidebar';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
+  <ProSidebarProvider>
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
   </React.StrictMode>
+  </ProSidebarProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
