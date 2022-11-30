@@ -25,20 +25,21 @@ function SidebarComp() {
   const [users] = useCollection(db.collection("users"));
    const [openTable, setOpenTable] = useState(false);
   return (
-    <SidebarContainer>
-      
-      <SidebarHeader>
-        <SidebarInfo>
+   
+      <SidebarContainer>
+       
+       <SidebarHeader>
+        <SidebarInfo> 
           <h2>FARM MARKET</h2>
           <h3>
             <FiberManualRecordIcon />
             {user.displayName}
           </h3>
-        </SidebarInfo>
+          </SidebarInfo> 
         <CreateIcon />
-      </SidebarHeader>
-      <Sidebar >
-      <Menu style={{backgroundColor:'#0a8d48', color:'white',}}>
+       </SidebarHeader> 
+      {/* <Sidebar >
+      <Menu style={{backgroundColor:'#0a8d48', color:'white',}}> */}
       <hr />
       {/* <SubMenu Icon={PeopleAltIcon} title="People" >
         {users?.docs.map((doc) => (
@@ -46,30 +47,33 @@ function SidebarComp() {
         ))}
         </SubMenu> */}
         <SidebarOption Icon={PeopleAltIcon} title="People" />
-        {users?.docs.map((doc) => (
-          <CurrentUsers key={doc.id} picture={doc.photoURL} name={doc.data().displayName}/>
-        ))}
+        {/* {users?.docs.map((doc) => (
+          <CurrentUsers key={doc.id} photoURL={doc.photoURL} displayName={doc.data().displayName}/>
+        ))} */}
          
       <hr />
-      <SubMenu Icon={ExpandMoreIcon} title="Auction">
+      {/* <SubMenu Icon={ExpandMoreIcon} title="Auction"> */}
        {/* <SidebarOption Icon={ExpandMoreIcon} title="Auctions" /> */}
-       <MenuItem> <Auction open={openForm} setOpen={setOpenForm}/> </MenuItem>
-       <MenuItem> <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/> </MenuItem>
+        <Auction open={openForm} setOpen={setOpenForm}/> 
+        <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/>
+       {/* <MenuItem> <Auction open={openForm} setOpen={setOpenForm}/> </MenuItem>
+       <MenuItem> <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/> </MenuItem> */}
        {/* <MenuItem><Link to="/ListOfAuctions"><Button>List Of Auction</Button></Link></MenuItem> */}
-        </SubMenu>
+        {/* </SubMenu> */}
       <hr />
-      <SubMenu Icon={AddIcon} addChannelOption title="Add Channel"> 
-       
-      {/* <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" /> */}
+      {/* <SubMenu Icon={AddIcon} addChannelOption title="Add Channel"> 
+        */}
+      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
       {channels?.docs.map((doc) => (
-         <MenuItem key={doc.id} id={doc.id} title={doc.data().name}>
-         {/* <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} /> */}
-        </MenuItem>
+        //  <MenuItem key={doc.id} id={doc.id} title={doc.data().name}>
+         <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
+        // </MenuItem>
       ))}
-     </SubMenu>
-      </Menu>
-      </Sidebar>
-    </SidebarContainer>
+     {/* </SubMenu>
+      </Menu> */}
+      {/* </Sidebar> */}
+    </SidebarContainer> 
+    
   );
 }
 
