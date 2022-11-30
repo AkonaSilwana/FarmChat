@@ -9,6 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
 import Login from "./Components/Login";
 import ListOfAuctions from "./Components/ListOfAuctions";
+import AuctionLink from "./Components/AuctionLink";
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -28,9 +29,9 @@ function App() {
                 <Route path="/" exact>
                   <Chat />
                 </Route>
-                {/* <Route path="/ListOfAuctions" exact>
-                  <ListOfAuctions />
-                </Route> */}
+                <Route path="/AuctionLink" exact>
+                  <AuctionLink/>
+                </Route>
               </Switch>
             </AppBody>
           </>

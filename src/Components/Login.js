@@ -28,7 +28,7 @@ function Login() {
     <LoginContainer>
       <LoginInnerContainer>
         <img
-          src="https://dribbble.com/shots/14217522-Farm-Logo-Design"
+          src="/Images/farmlogo.jpg"
           alt="logo"
         />
 

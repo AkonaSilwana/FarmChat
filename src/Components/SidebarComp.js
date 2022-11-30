@@ -38,7 +38,7 @@ function SidebarComp() {
         <CreateIcon />
       </SidebarHeader>
       <Sidebar >
-      <Menu style={{backgroundColor:'#E9967A', color:'white',}}>
+      <Menu style={{backgroundColor:'#0a8d48', color:'white',}}>
       <hr />
       {/* <SubMenu Icon={PeopleAltIcon} title="People" >
         {users?.docs.map((doc) => (
@@ -79,7 +79,7 @@ const SidebarContainer = styled.div`
   color: white;
   background-color: var(--farm-color);
   flex: 0.3;
-  border-top: 1px solid #e9967a;
+  border-top: 1px solid #0a8d48;
   max-width: 260px;
   margin-top: 60px;
 
@@ -92,12 +92,12 @@ const SidebarContainer = styled.div`
 
 const SidebarHeader = styled.div`
   display: flex;
-  border-bottom: 1px solid #e9967a;
+  border-bottom: 1px solid #0a8d48;
   padding: 13px;
 
   > .MuiSvgIcon-root {
     padding: 8px;
-    color: #e9967a;
+    color: #0a8d48;
     font-size: 18px;
     background-color: white;
     border-radius: 99px;

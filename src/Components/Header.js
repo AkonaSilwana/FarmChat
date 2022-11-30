@@ -55,7 +55,7 @@ const HeaderSearch = styled.div`
  flex: 0.4;
  opacity: 1;
  border-radius: 6px;
- background-color:#E9967A;
+ background-color:white;
  text-align: center;
  display: flex;
  padding: 0 50px;
