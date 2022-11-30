@@ -10,11 +10,23 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-function Sidebar() {
+import {Sidebar, SubMenu, Menu, MenuItem} from 'react-pro-sidebar'
+import Auction from "./CreateAuction";
+import { useState } from "react";
+import { NoEncryption } from "@material-ui/icons";
+import CurrentUsers from "./CurrentUsers";
+import ListOfAuctions from "./ListOfAuctions";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
+function SidebarComp() {
   const [channels] = useCollection(db.collection("rooms"));
+  const [openForm, setOpenForm] = useState(false);
   const [user] = useAuthState(auth);
+  const [users] = useCollection(db.collection("users"));
+   const [openTable, setOpenTable] = useState(false);
   return (
     <SidebarContainer>
+      
       <SidebarHeader>
         <SidebarInfo>
           <h2>FARM MARKET</h2>
@@ -25,21 +37,43 @@ function Sidebar() {
         </SidebarInfo>
         <CreateIcon />
       </SidebarHeader>
+      <Sidebar >
+      <Menu style={{backgroundColor:'#E9967A', color:'white',}}>
       <hr />
-      <SidebarOption Icon={PeopleAltIcon} title="People" />
+      {/* <SubMenu Icon={PeopleAltIcon} title="People" >
+        {users?.docs.map((doc) => (
+          <MenuItem key={doc.id} id={doc.uid} title={doc.data().displayName}></MenuItem>
+        ))}
+        </SubMenu> */}
+        <SidebarOption Icon={PeopleAltIcon} title="People" />
+        {users?.docs.map((doc) => (
+          <CurrentUsers key={doc.id} picture={doc.photoURL} name={doc.data().displayName}/>
+        ))}
+         
       <hr />
-      <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
+      <SubMenu Icon={ExpandMoreIcon} title="Auction">
+       {/* <SidebarOption Icon={ExpandMoreIcon} title="Auctions" /> */}
+       <MenuItem> <Auction open={openForm} setOpen={setOpenForm}/> </MenuItem>
+       <MenuItem> <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/> </MenuItem>
+       {/* <MenuItem><Link to="/ListOfAuctions"><Button>List Of Auction</Button></Link></MenuItem> */}
+        </SubMenu>
       <hr />
-      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
-
+      <SubMenu Icon={AddIcon} addChannelOption title="Add Channel"> 
+       
+      {/* <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" /> */}
       {channels?.docs.map((doc) => (
-        <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
+         <MenuItem key={doc.id} id={doc.id} title={doc.data().name}>
+         {/* <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} /> */}
+        </MenuItem>
       ))}
+     </SubMenu>
+      </Menu>
+      </Sidebar>
     </SidebarContainer>
   );
 }
 
-export default Sidebar;
+export default SidebarComp;
 
 const SidebarContainer = styled.div`
   color: white;
