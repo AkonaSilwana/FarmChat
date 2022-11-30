@@ -1,7 +1,7 @@
 import React from 'react'
 import { getAuth } from "firebase/auth";
 import { db } from "../firebase";
-function CurrentUsers({picture, name}) {
+function CurrentUsers({photoURL, displayName}) {
     const auth = getAuth();
 const user = auth.currentUser;
  React.useEffect(() => {
@@ -25,7 +25,7 @@ if (user !== null) {
   }
 
   return (
-    <div>{picture}{name}</div>
+    <div>{photoURL}{displayName}</div>
   )
 }
 

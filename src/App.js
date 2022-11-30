@@ -17,6 +17,7 @@ function App() {
   
   return (
     <div className="App">
+      
       <Router>
         {!user ? (
           <Login />
@@ -26,16 +27,13 @@ function App() {
             <AppBody>
               <Sidebar />
               <Switch>
-                <Route path="/" exact>
-                  <Chat />
-                </Route>
-                <Route path="/AuctionLink" exact>
-                  <AuctionLink/>
-                </Route>
-              </Switch>
+                <Route path="/" exact component={Chat}/>
+                  <Route path="/AuctionLink" exact component={AuctionLink}/>
+                </Switch>
             </AppBody>
-          </>
+            </>
         )}
+         
       </Router>
     </div>
   );
