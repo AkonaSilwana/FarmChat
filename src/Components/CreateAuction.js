@@ -13,7 +13,7 @@ import {
   getDownloadURL,
   uploadBytesResumable,
 } from "firebase/storage";
-
+import styled from "styled-components";
 
 export default function Auction({ open, setOpen }) {
   const theme = useTheme();
@@ -112,7 +112,7 @@ export default function Auction({ open, setOpen }) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" onClick={handleClickOpen}  sx={{ color: "white"}}>
         Create Auction
       </Button>
       <Dialog open={open} onClose={handleClose} fullScreen={fullScreen}>
@@ -229,3 +229,7 @@ export default function Auction({ open, setOpen }) {
     </div>
   );
 }
+
+const createAuctionContainer = styled.div`
+
+`

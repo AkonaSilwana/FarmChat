@@ -53,7 +53,7 @@ function SidebarComp() {
          
       <hr />
       {/* <SubMenu Icon={ExpandMoreIcon} title="Auction"> */}
-       {/* <SidebarOption Icon={ExpandMoreIcon} title="Auctions" /> */}
+       <SidebarOption Icon={ExpandMoreIcon} title="Auctions" />
         <Auction open={openForm} setOpen={setOpenForm}/> 
         <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/>
        {/* <MenuItem> <Auction open={openForm} setOpen={setOpenForm}/> </MenuItem>

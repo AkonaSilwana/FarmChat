@@ -1,31 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { getAuth } from "firebase/auth";
 import { db } from "../firebase";
+import { useState } from "react";
 function CurrentUsers({photoURL, displayName}) {
     const auth = getAuth();
-const user = auth.currentUser;
- React.useEffect(() => {
-    db.collection("users")
-      .get()
-      .then((resp) => {
-        // get all users
-        console.log(
-          " ~ .then ~ resp",
-          resp.docs.map((doc) => {
-            doc.data();
-          })
-        );
-      });
+  const [authUsers , getAuthUsers] = useState([])
+//  React.useEffect(() => {
+//     db.collection("users")
+//       .get()
+//       .then((resp) => {
+//         // get all users
+//         console.log(
+//           " ~ users ~ resp",
+//           resp.docs.map((doc) => {
+//             doc.data();
+//           })
+//         );
+//       });
+//   }, []);
+   console.log('users', authUsers)
+  useEffect(() => {
+    let usersData = [];
+    db.collection("users").onSnapshot((snapshot) =>
+      snapshot.docs.map((doc) => {
+        usersData.push(doc.data());
+        return doc.data();
+      })
+    );
+    getAuthUsers(usersData);
   }, []);
-if (user !== null) {
- 
-  const displayName = user.displayName;
 
-  const photoURL = user.photoURL;
-  }
 
   return (
-    <div>{photoURL}{displayName}</div>
+    <div>{authUsers.photoURL}{authUsers.displayName}</div>
   )
 }
 
