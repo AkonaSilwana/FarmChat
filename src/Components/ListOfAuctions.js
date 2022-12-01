@@ -10,7 +10,7 @@ import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import styled from "styled-components";
 import { db } from "../firebase";
-import { Link } from "react-router-dom";
+import { Link } from "@mui/material";
 
 function ListOfAuctions({ clickOpen, getOpen }) {
   const theme = useTheme();
@@ -40,7 +40,7 @@ function ListOfAuctions({ clickOpen, getOpen }) {
   
   return (
     <div>
-      <Button variant="outlined" onClick={handleOpen}>
+      <Button variant="outlined" onClick={handleOpen} sx={{ color: "white"}}>
         List Of Auctions
       </Button>
       <Dialog open={clickOpen} onClose={onClickClose} fullScreen={fullScreen}>
@@ -51,14 +51,19 @@ function ListOfAuctions({ clickOpen, getOpen }) {
                 title="Available Auctions"
                 
                 columns={[
-                  { title: "ID", field: "auctionId", render:rowData =><Link href={'/AuctionLink?id=${rowdata.id}'} target="_blank">{rowData.id}</Link> },
+                  { title: "ID", field: "auctionId", render:rowData =><Link href={`/AuctionLink?id=${rowData.auctionId}`} target="_blank">{rowData.auctionId}</Link> },
                   { title: "Auction Title", field: "auctionTitle" },
                   { title: "Auction Date", field: "auctionDate" },
                   { title: "Start Time", field: "auctionStartTime" },
                   { title: "Start Time", field: "auctionEndTime" },
-                   { title: "Action",render:rowData =><Link href={'/AuctionLink?id=${rowdata.id}'} target="_blank">Open Auction</Link>  }
+                   { title: "Action",render:rowData =><Link href={`/AuctionLink?id=${rowData.auctionId}`} target="_blank">Open Auction</Link>  }
                 ]}
-                data={auctionData}
+                // data={auctionData}
+                data={[
+                   {auctionId:1, auctionTitle: 'Mehmet', auctionDate: '10/12/2022', auctionStartTime: '8am', auctionEndTime: '2pm' },
+                    {auctionId:2, auctionTitle: 'sheeps', auctionDate: '20/12/2022', auctionStartTime: '8am', auctionEndTime: '2pm' },
+                    {auctionId:3, auctionTitle: 'cows', auctionDate: '15/12/2022', auctionStartTime: '8am', auctionEndTime: '2pm' },
+                ]}
                 options={{
                   search: true,
                    
