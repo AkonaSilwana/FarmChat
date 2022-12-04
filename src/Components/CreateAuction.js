@@ -14,13 +14,14 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import styled from "styled-components";
-
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 export default function Auction({ open, setOpen }) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("lg"));
   const [imgUrl, setImgUrl] = useState(null);
   const [progresspercent, setProgresspercent] = useState(0);
-
+  const [user] = useAuthState(auth);
   useEffect(() => {
     db.collection("users")
       .get()
@@ -74,7 +75,9 @@ export default function Auction({ open, setOpen }) {
     productImage,
     productLocation,
     productName,
-    productPrice
+    productPrice,
+    currentBid,
+    currentBidder
   ) => {
     db.collection("auctions")
       .add({
@@ -88,6 +91,8 @@ export default function Auction({ open, setOpen }) {
         productLocation: productLocation,
         productName: productName,
         productPrice: productPrice,
+        currentBid: productPrice,
+        currentBidder: "",
       })
       .then(async (docRef) => {
         db.collection("rooms")
@@ -112,7 +117,11 @@ export default function Auction({ open, setOpen }) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}  sx={{ color: "white"}}>
+      <Button
+        variant="outlined"
+        onClick={handleClickOpen}
+        sx={{ color: "white" }}
+      >
         Create Auction
       </Button>
       <Dialog open={open} onClose={handleClose} fullScreen={fullScreen}>
@@ -121,37 +130,49 @@ export default function Auction({ open, setOpen }) {
           <FormContainer
             defaultValues={{ auctionDate: "" }}
             onSubmit={(data) => {
-              createAuction(
-                data.auctionId,
-                data.auctionDate,
-                data.auctionEndTime,
-                data.auctionStartTime,
-                data.auctionTitle,
-                data.productDescription,
-                imgUrl,
-                data.productLocation,
-                data.productName,
-                data.productPrice
-              );
+              try {
+                createAuction(
+                  data.auctionId,
+                  data.auctionDate,
+                  data.auctionEndTime,
+                  data.auctionStartTime,
+                  data.auctionTitle,
+                  data.productDescription,
+                  imgUrl,
+                  data.productLocation,
+                  data.productName,
+                  data.productPrice,
+                  data.currentBid,
+                  data.currentBidder
+                );
+              } catch (error) {
+                alert(error);
+              }
             }}
             onSuccess={(data) => {
-              createAuction(
-                data.auctionId,
-                data.auctionDate,
-                data.auctionEndTime,
-                data.auctionStartTime,
-                data.auctionTitle,
-                data.productDescription,
-                imgUrl,
-                data.productLocation,
-                data.productName,
-                data.productPrice
-              );
+              try {
+                createAuction(
+                  data.auctionId,
+                  data.auctionDate,
+                  data.auctionEndTime,
+                  data.auctionStartTime,
+                  data.auctionTitle,
+                  data.productDescription,
+                  imgUrl,
+                  data.productLocation,
+                  data.productName,
+                  data.productPrice,
+                  data.currentBid,
+                  data.currentBidder
+                );
+              } catch (error) {
+                alert(error);
+              }
             }}
           >
             <Box>
               <TextFieldElement
-                name="Auction Id"
+                name="auctionId"
                 label="Auction Id"
                 required
                 variant="standard"
@@ -167,7 +188,7 @@ export default function Auction({ open, setOpen }) {
               />
               <TextFieldElement
                 name="auctionStartTime"
-                label="Auction Start Time:"
+                label="Auction Start Time in hours"
                 required
                 type={"time"}
                 variant="standard"
@@ -175,7 +196,7 @@ export default function Auction({ open, setOpen }) {
               />
               <TextFieldElement
                 name="auctionEndTime"
-                label="Auction End Time:"
+                label="Auction End Time in hours"
                 required
                 type={"time"}
                 variant="standard"
@@ -196,7 +217,7 @@ export default function Auction({ open, setOpen }) {
                 sx={{ m: 1, mt: 3, width: "25ch" }}
               />
               <input type="file" accept="image/*" onChange={handleChange} />
-              
+
               <TextFieldElement
                 name="productDescription"
                 label="Product Description"
@@ -230,6 +251,4 @@ export default function Auction({ open, setOpen }) {
   );
 }
 
-const createAuctionContainer = styled.div`
-
-`
+const createAuctionContainer = styled.div``;

@@ -10,14 +10,10 @@ import { auth } from "./firebase";
 import Login from "./Components/Login";
 import ListOfAuctions from "./Components/ListOfAuctions";
 import AuctionLink from "./Components/AuctionLink";
-
 function App() {
   const [user, loading] = useAuthState(auth);
-
-  
   return (
     <div className="App">
-      
       <Router>
         {!user ? (
           <Login />
@@ -27,23 +23,19 @@ function App() {
             <AppBody>
               <Sidebar />
               <Switch>
-                <Route path="/" exact component={Chat}/>
-                  <Route path="/AuctionLink" exact component={AuctionLink}/>
-                </Switch>
+                <Route path="/" exact component={Chat} />
+                <Route path="/AuctionLink/:id" exact component={AuctionLink} />
+              </Switch>
             </AppBody>
-            </>
+          </>
         )}
-         
       </Router>
     </div>
   );
 }
-
 export default App;
 const AppLoading = styled.div``;
-
 const AppLoadingContents = styled.div``;
-
 const AppBody = styled.div`
   display: flex;
   height: 100vh;

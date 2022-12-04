@@ -24,6 +24,8 @@ function SidebarComp() {
   const [user] = useAuthState(auth);
   const [users] = useCollection(db.collection("users"));
    const [openTable, setOpenTable] = useState(false);
+
+   
   return (
    
       <SidebarContainer>
@@ -54,7 +56,9 @@ function SidebarComp() {
       <hr />
       {/* <SubMenu Icon={ExpandMoreIcon} title="Auction"> */}
        <SidebarOption Icon={ExpandMoreIcon} title="Auctions" />
-        <Auction open={openForm} setOpen={setOpenForm}/> 
+       {  user.email === "asilwana30@gmail.com"&&
+       <Auction open={openForm} setOpen={setOpenForm}/>}
+         
         <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/>
        {/* <MenuItem> <Auction open={openForm} setOpen={setOpenForm}/> </MenuItem>
        <MenuItem> <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/> </MenuItem> */}
@@ -63,7 +67,9 @@ function SidebarComp() {
       <hr />
       {/* <SubMenu Icon={AddIcon} addChannelOption title="Add Channel"> 
         */}
-      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
+        {  user.email === "asilwana30@gmail.com"&&
+      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />}
+      <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
       {channels?.docs.map((doc) => (
         //  <MenuItem key={doc.id} id={doc.id} title={doc.data().name}>
          <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />

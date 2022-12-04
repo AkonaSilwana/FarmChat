@@ -27,17 +27,16 @@ function ListOfAuctions({ clickOpen, getOpen }) {
     let dataAuction = [];
     db.collection("auctions").onSnapshot((snapshot) =>
       snapshot.docs.map((doc) => {
-        dataAuction.push(doc.data());
+        dataAuction.push({ id: doc.id, data: doc.data() });
         return doc.data();
       })
     );
     setData(dataAuction);
   }, []);
-    
-  
+
   return (
     <div>
-      <Button variant="outlined" onClick={handleOpen} sx={{ color: "white"}}>
+      <Button variant="outlined" onClick={handleOpen} sx={{ color: "white" }}>
         List Of Auctions
       </Button>
       <Dialog open={clickOpen} onClose={onClickClose} fullScreen={fullScreen}>
@@ -47,19 +46,29 @@ function ListOfAuctions({ clickOpen, getOpen }) {
               <MaterialTable
                 title="Available Auctions"
                 columns={[
-                  { title: "ID", field: "auctionId", render:rowData =><Link href={`/AuctionLink?id=${rowData.auctionId}`} target="_blank">{rowData.auctionId}</Link> },
-                  { title: "Auction Title", field: "auctionTitle" },
-                  { title: "Auction Date", field: "auctionDate" },
-                  { title: "Start Time", field: "auctionStartTime" },
-                  { title: "Start Time", field: "auctionEndTime" },
-                   { title: "Action",render:rowData =><Link href={`/AuctionLink?id=${rowData.auctionId}`} target="_blank">Open Auction</Link>  }
+                  {
+                    title: "ID",
+                    field: "id",
+                    render: (rowData) => (
+                      <Link href={`/AuctionLink/${rowData.id}`}>
+                        {rowData.id}
+                      </Link>
+                    ),
+                  },
+                  { title: "Auction Title", field: "data.auctionTitle" },
+                  { title: "Auction Date", field: "data.auctionDate" },
+                  { title: "Start Time", field: "data.auctionStartTime" },
+                  { title: "Start Time", field: "data.auctionEndTime" },
+                  {
+                    title: "Action",
+                    render: (rowData) => (
+                      <Link href={`/AuctionLink/${rowData.id}`}>
+                        Open Auction
+                      </Link>
+                    ),
+                  },
                 ]}
-                // data={auctionData}
-                data={[
-                   {auctionId:1, auctionTitle: 'Mehmet', auctionDate: '10/12/2022', auctionStartTime: '8am', auctionEndTime: '2pm' },
-                    {auctionId:2, auctionTitle: 'sheeps', auctionDate: '20/12/2022', auctionStartTime: '8am', auctionEndTime: '2pm' },
-                    {auctionId:3, auctionTitle: 'cows', auctionDate: '15/12/2022', auctionStartTime: '8am', auctionEndTime: '2pm' },
-                ]}
+                data={auctionData}
                 options={{
                   search: true,
                 }}
