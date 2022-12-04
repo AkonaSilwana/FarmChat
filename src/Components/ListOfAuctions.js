@@ -19,13 +19,10 @@ function ListOfAuctions({ clickOpen, getOpen }) {
   const handleOpen = () => {
     getOpen(true);
   };
-
   const onClickClose = () => {
     getOpen(false);
   };
-
   const [auctionData, setData] = useState([]);
-  console.log('BB',auctionData)
   useEffect(() => {
     let dataAuction = [];
     db.collection("auctions").onSnapshot((snapshot) =>
@@ -49,7 +46,6 @@ function ListOfAuctions({ clickOpen, getOpen }) {
             <ThemeProvider theme={defaultMaterialTheme}>
               <MaterialTable
                 title="Available Auctions"
-                
                 columns={[
                   { title: "ID", field: "auctionId", render:rowData =><Link href={`/AuctionLink?id=${rowData.auctionId}`} target="_blank">{rowData.auctionId}</Link> },
                   { title: "Auction Title", field: "auctionTitle" },
@@ -66,9 +62,7 @@ function ListOfAuctions({ clickOpen, getOpen }) {
                 ]}
                 options={{
                   search: true,
-                   
                 }}
-                
               />
             </ThemeProvider>
           </AuctionContainer>
