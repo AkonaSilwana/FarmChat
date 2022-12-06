@@ -254,7 +254,7 @@ export default function Auction({ open, setOpen }) {
               />
               <TextFieldElement
                 name="productName"
-                label="Product name:"
+                label="Product Owner:"
                 required
                 variant="standard"
                 sx={{ m: 1, mt: 3, width: "25ch" }}

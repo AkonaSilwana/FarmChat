@@ -91,10 +91,10 @@ function AuctionLink() {
             />
           </ImgBox>
           <AuctionInfoBox>
-            <h1>Product Name: {auctionDetails?.data()?.productName}</h1>
+            <h1>Product Owner: {auctionDetails?.data()?.productName}</h1>
 
             <p>
-              Product Description: {auctionDetails?.data()?.productDescription}
+              Product Name: {auctionDetails?.data()?.productDescription}
             </p>
             <h4>Product price: {auctionDetails?.data()?.productPrice}</h4>
 
@@ -137,17 +137,15 @@ export default AuctionLink;
 
 const AuctionLinkContainer = styled.div`
   text-align: "center";
-  /* height: 100%;
- width: 100%; */
+ 
 `;
 const AuctionLinkContainer2 = styled.div`
   align-items: "center";
-  /* width: 100%; */
+  
   display: flex;
 `;
 const ImgBox = styled.div`
-  /* height:500px;
-  width: 500px; */
+
 
   > img {
     padding: 50px;
@@ -157,8 +155,7 @@ const ImgBox = styled.div`
   }
 `;
 const AuctionInfoBox = styled.div`
-  /* height:50%;
-  width: 50%; */
+ 
   padding: 250px;
   margin-top: -120px;
 
