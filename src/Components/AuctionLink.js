@@ -91,10 +91,10 @@ function AuctionLink() {
             />
           </ImgBox>
           <AuctionInfoBox>
-            <h1>Product Name: {auctionDetails?.data()?.productName}</h1>
+            <h1>Product Owner: {auctionDetails?.data()?.productName}</h1>
 
             <p>
-              Product Description: {auctionDetails?.data()?.productDescription}
+              Product Name: {auctionDetails?.data()?.productDescription}
             </p>
             <h4>Product price: {auctionDetails?.data()?.productPrice}</h4>
 
