@@ -9,14 +9,14 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import Countdown from "react-countdown";
 import { db } from "../firebase";
 import { auth } from "../firebase";
-import moment from 'moment';
+import moment from "moment";
 function AuctionLink() {
   let { id } = useParams();
   const [bidAmount, setBidAmount] = useState(0);
 
   const [user] = useAuthState(auth);
   const [auctionDetails] = useDocument(id && db.collection("auctions").doc(id));
-  console.log("hey data",auctionDetails?.data()) 
+  console.log("hey data", auctionDetails?.data());
   const bidNow = () => {
     if (bidAmount > auctionDetails?.data().currentBid) {
       db.collection("auctions").doc(id).update({
@@ -27,59 +27,58 @@ function AuctionLink() {
       alert("Your bid amount is less than the current bid amount");
     }
   };
-   
+
   console.log(
     "🚀 auctionDetails.data()",
     Date.now(),
     Date.now(auctionDetails?.data().auctionDate)
-    
   );
   let time1 = moment(auctionDetails?.data().auctionStartTime, "h");
-   let time2 = moment(auctionDetails?.data().auctionEndTime, "h");
-   let subtract = time1.subtract(time2);
-   let format = moment(subtract).format("h")
-   console.log("hey",format); 
-   let timeInBetween = (format* 60 * 60 *1000)
-   console.log('Hey timeinbetween', timeInBetween)
-   
-   const [time, setTime ] = useState(timeInBetween);
+  let time2 = moment(auctionDetails?.data().auctionEndTime, "h");
+  let subtract = time1.subtract(time2);
+  let format = moment(subtract).format("h");
+  console.log("hey", format);
+  let timeInBetween = format * 60 * 60 * 1000;
+  console.log("Hey timeinbetween", timeInBetween);
 
-   useEffect(() => {
-    setTimeout(() =>{
-      setTime(time-1000);
+  const [time, setTime] = useState(timeInBetween);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTime(time - 1000);
     }, 1000);
+  }, [time]);
+  const getCountDown = (milliseconds) => {
+    let totalSeconds = parseInt(Math.floor(milliseconds / 1000));
+    let totalMinutes = parseInt(Math.floor(totalSeconds / 60));
+    let totalHours = parseInt(Math.floor(totalMinutes / 60));
 
-   },[time]);
-    const getCountDown = (milliseconds) => {
-      let totalSeconds = parseInt(Math.floor(milliseconds/1000));
-      let totalMinutes = parseInt(Math.floor(totalSeconds/60));
-      let totalHours = parseInt(Math.floor(totalMinutes/60));
+    let seconds = parseInt(totalSeconds % 60);
+    let minutes = parseInt(totalMinutes % 60);
+    let hours = parseInt(totalHours % 60);
+    console.log("Hey countdown", seconds);
+    console.log("Hey countdown", minutes);
+    console.log("Hey countdown", hours);
+    return `${hours} : ${minutes} : ${seconds}`;
+  };
+  console.log("Hey countdown", getCountDown);
 
-      let seconds = parseInt(totalSeconds % 60);
-      let minutes = parseInt(totalMinutes % 60);
-      let hours = parseInt(totalHours % 60);
-      console.log('Hey countdown',seconds)
-    console.log('Hey countdown',minutes)
-    console.log('Hey countdown',hours)
+  const Completionist = () => <span>The winner is Anathi Makamane!</span>;
+
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return <Completionist />;
+    } else {
+      // Render a countdown
       return (
-        `${hours} : ${minutes} : ${seconds}`
-      )
+        <span>
+          {hours}:{minutes}:{seconds}
+        </span>
+      );
     }
-    console.log('Hey countdown',getCountDown)
+  };
 
-    const Completionist = () => <span>The winner is Anathi Makamane!</span>;
-
-    const renderer = ({ hours, minutes, seconds, completed }) => {
-  if (completed) {
-    // Render a completed state
-    return <Completionist />;
-  } else {
-    // Render a countdown
-    return <span>{hours}:{minutes}:{seconds}</span>;
-  }
-};
-
-     
   return (
     <div>
       <AuctionHeader />
@@ -120,12 +119,12 @@ function AuctionLink() {
             <hr />
             {/* <h4>Auction ends in: {getCountDown(timeInBetween)} </h4> */}
             <h4>Auction ends in: </h4>
-             <Countdown
+            <Countdown
               date={Date.now(auctionDetails?.data().auctionStartTime) + 400000}
               renderer={renderer}
-            > 
+            >
               <h6>Auction Ended</h6>
-             </Countdown> 
+            </Countdown>
             {/* <TextField label="Winner Is!!" variant="outlined" /> */}
           </AuctionInfoBox>
         </AuctionLinkContainer2>
@@ -140,13 +139,11 @@ const AuctionLinkContainer = styled.div`
   text-align: "center";
   /* height: 100%;
  width: 100%; */
-
 `;
 const AuctionLinkContainer2 = styled.div`
   align-items: "center";
   /* width: 100%; */
   display: flex;
-   
 `;
 const ImgBox = styled.div`
   /* height:500px;

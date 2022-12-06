@@ -10,16 +10,12 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import { Sidebar, SubMenu, Menu, MenuItem } from "react-pro-sidebar";
+
 import Auction from "./CreateAuction";
 import { useState } from "react";
-import { NoEncryption } from "@material-ui/icons";
+
 import CurrentUsers from "./CurrentUsers";
 import ListOfAuctions from "./ListOfAuctions";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
-import { getAuth } from "firebase/auth";
-import { height } from "@mui/system";
 
 function SidebarComp() {
   const [channels] = useCollection(db.collection("rooms"));
@@ -27,8 +23,8 @@ function SidebarComp() {
   const [user] = useAuthState(auth);
   const [openTable, setOpenTable] = useState(false);
   const [openPeople, setOpenPeople] = useState(false);
- 
-   return (
+
+  return (
     <SidebarContainer>
       <SidebarHeader>
         <SidebarInfo>
@@ -45,8 +41,7 @@ function SidebarComp() {
 
       <SidebarOption Icon={PeopleAltIcon} title="People" />
 
-      
-        <CurrentUsers pressOpen={openPeople} makeOpen={setOpenPeople} />
+      <CurrentUsers pressOpen={openPeople} makeOpen={setOpenPeople} />
       <hr />
 
       <SidebarOption Icon={ExpandMoreIcon} title="Auctions" />
