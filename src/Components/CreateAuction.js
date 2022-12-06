@@ -222,7 +222,6 @@ export default function Auction({ open, setOpen }) {
             }}
           >
             <Box>
-             
               <TextFieldElement
                 name="auctionDate"
                 label="Auction Date: "
