@@ -2,11 +2,20 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import { FormContainer, TextFieldElement } from "react-hook-form-mui";
 import { Box } from "@material-ui/core";
-import { Button, Dialog, DialogActions, DialogContent, FormControl, Select, MenuItem, InputLabel } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DialogTitle from "@mui/material/DialogTitle";
-import { getDatabase, ref, child, get } from "firebase/database";
+import { useDocument } from "react-firebase-hooks/firestore";
 import { storage, db } from "../firebase";
 import {
   ref as refStorage,
@@ -23,31 +32,47 @@ export default function Auction({ open, setOpen }) {
   const [progresspercent, setProgresspercent] = useState(0);
   const [user] = useAuthState(auth);
   const [catagoryData, setCatagories] = useState([]);
-  const [selectedValue, setSelectedValue] = useState('')
+  const [productData, setProducts] = useState([]);
+  const [animalData, setAnimals] = useState([]);
+  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedProductValue, setSelectedProductValue] = useState("");
+  const [selectedAnimalValue, setSelectedAnimalValue] = useState("");
 
   useEffect(() => {
     let dataCatagory = [];
+    let dataProduct = [];
+    let dataAnimals = [];
     db.collection("catagories").onSnapshot((snapshot) =>
-    snapshot.docs.map((doc) => {
-      dataCatagory.push({ id: doc.id, data: doc.data() });
-      return doc.data();
-    })
+      snapshot.docs.map((doc) => {
+        dataCatagory.push({ id: doc.id, data: doc.data() });
+        return doc.data();
+      })
     );
+    db.collection("products").onSnapshot((snapshot) =>
+      snapshot.docs.map((doc) => {
+        dataProduct.push({ id: doc.id, data: doc.data() });
+        return doc.data();
+      })
+    );
+    db.collection("animals").onSnapshot((snapshot) =>
+      snapshot.docs.map((doc) => {
+        dataAnimals.push({ id: doc.id, data: doc.data() });
+        return doc.data();
+      })
+    );
+    setAnimals(dataAnimals);
+    setProducts(dataProduct);
     setCatagories(dataCatagory);
   }, []);
-  
-  console.log("catagories -dfd", catagoryData)
+
   useEffect(() => {
     db.collection("users")
       .get()
       .then((resp) => {
         // get all users
-        console.log(
-          "🚀 ~ .then ~ resp",
-          resp.docs.map((doc) => {
-            doc.data();
-          })
-        );
+        resp.docs.map((doc) => {
+          doc.data();
+        });
       });
   }, []);
 
@@ -55,15 +80,17 @@ export default function Auction({ open, setOpen }) {
     setOpen(true);
   };
 
-  // const handleCategoryChange = (e) => {
-    
-  //     setSelectedValue(e.target.value)
-  //     if(selectedValue === 'Products'){
-  //       const [auctionDetails] = useDocument(id && db.collection("auctions").doc(id));
-  //     }else{
+  const handleCategoryChange = (e) => {
+    setSelectedValue(e.target.value);
+  };
 
-  //     }
-  // }
+  const handleProductChange = (e) => {
+    setSelectedProductValue(e.target.value);
+  };
+  const handleAnimalChange = (e) => {
+    setSelectedAnimalValue(e.target.value);
+  };
+
   const handleChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -241,20 +268,59 @@ export default function Auction({ open, setOpen }) {
                 sx={{ m: 1, mt: 3, width: "25ch" }}
               />
               <input type="file" accept="image/*" onChange={handleChange} />
-               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+              <FormControl style={{ marginTop: 16 }} fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Categories
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={selectedValue}
                   label="Category"
-                  // onChange={handleCategoryChange}
+                  onChange={handleCategoryChange}
                 >
-                  {catagoryData?.map((category)=>
-                    <MenuItem value={category?.id}>{category?.data?.categoryName}</MenuItem>)
-                  }
+                  {catagoryData?.map((category) => (
+                    <MenuItem value={category?.data?.categoryName}>
+                      {category?.data?.categoryName}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
+              {selectedValue === "Products" ? (
+                <FormControl style={{ marginTop: 16 }} fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Products
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-Products"
+                    id="demo-simple-Products"
+                    value={selectedProductValue}
+                    label="Products"
+                    onChange={handleProductChange}
+                  >
+                    {productData[0]?.data?.products?.map((product) => (
+                      <MenuItem value={product}>{product}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              ) : (
+                <FormControl style={{ marginTop: 16 }} fullWidth>
+                  <InputLabel id="demo-simple-select-label">Animals</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-Animals"
+                    id="demo-simple-Animals"
+                    value={selectedAnimalValue}
+                    label="Products"
+                    onChange={handleAnimalChange}
+                  >
+                    {animalData?.map((animals) => (
+                      <MenuItem value={animals?.data?.animalType}>
+                        {animals?.data?.animalType}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
               <TextFieldElement
                 name="productDescription"
                 label="Product Description"

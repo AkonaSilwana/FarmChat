@@ -66,6 +66,19 @@ function AuctionLink() {
       )
     }
     console.log('Hey countdown',getCountDown)
+
+    const Completionist = () => <span>The winner is Anathi Makamane!</span>;
+
+    const renderer = ({ hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return <span>{hours}:{minutes}:{seconds}</span>;
+  }
+};
+
      
   return (
     <div>
@@ -87,6 +100,7 @@ function AuctionLink() {
             <h4>Product price: {auctionDetails?.data()?.productPrice}</h4>
 
             <h3>Bid amount: {auctionDetails?.data()?.currentBid} </h3>
+            <h3>Current Bidder: {auctionDetails?.data()?.currentBidder} </h3>
             <BidBox>
               <TextField
                 label="Enter Amount"
@@ -104,13 +118,15 @@ function AuctionLink() {
               </Button>
             </BidBox>
             <hr />
-            <h4>Auction ends in: {getCountDown(timeInBetween)} </h4>
-            {/* <Countdown
-              date={Date.now(auctionDetails?.data().auctionStartTime) + 10000}
-            > */}
+            {/* <h4>Auction ends in: {getCountDown(timeInBetween)} </h4> */}
+            <h4>Auction ends in: </h4>
+             <Countdown
+              date={Date.now(auctionDetails?.data().auctionStartTime) + 400000}
+              renderer={renderer}
+            > 
               <h6>Auction Ended</h6>
-            {/* </Countdown> */}
-            <TextField label="Winner Is!!" variant="outlined" />
+             </Countdown> 
+            {/* <TextField label="Winner Is!!" variant="outlined" /> */}
           </AuctionInfoBox>
         </AuctionLinkContainer2>
       </AuctionLinkContainer>
