@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CreateIcon from "@material-ui/icons/Create";
@@ -18,12 +18,34 @@ import CurrentUsers from "./CurrentUsers";
 import ListOfAuctions from "./ListOfAuctions";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+
+
 function SidebarComp() {
   const [channels] = useCollection(db.collection("rooms"));
   const [openForm, setOpenForm] = useState(false);
   const [user] = useAuthState(auth);
-  const [users] = useCollection(db.collection("users"));
-   const [openTable, setOpenTable] = useState(false);
+ const [openTable, setOpenTable] = useState(false);
+//  const [userDetals] = useCollection(db.collection("users"));
+
+//  console.log("hey user", userDetals)
+   
+//  const auth = getAuth();
+//   const [authUsers , getAuthUsers] = useState([])
+
+ 
+//   useEffect(() => {
+//     let usersData = [];
+//     db.collection("users").onSnapshot((snapshot) =>
+//       snapshot.docs.map((doc) => {
+//         usersData.push(doc.data());
+//         return doc.data();
+//       })
+//     );
+//     getAuthUsers(usersData);
+//   }, []);
+//     console.log('users', authUsers)
+   
   return (
    
       <SidebarContainer>
@@ -47,14 +69,20 @@ function SidebarComp() {
         ))}
         </SubMenu> */}
         <SidebarOption Icon={PeopleAltIcon} title="People" />
-        {/* {users?.docs.map((doc) => (
-          <CurrentUsers key={doc.id} photoURL={doc.photoURL} displayName={doc.data().displayName}/>
+        
+         {/* {authUsers?.docs.map((theUsers) => (
+          <>
+          <span>{theUsers?.data?.photoUrl}</span>
+          <span>{theUsers?.data?.displayName}</span> 
+          </> 
         ))} */}
          
       <hr />
       {/* <SubMenu Icon={ExpandMoreIcon} title="Auction"> */}
        <SidebarOption Icon={ExpandMoreIcon} title="Auctions" />
-        <Auction open={openForm} setOpen={setOpenForm}/> 
+       {  user.email === "asilwana30@gmail.com"&&
+       <Auction open={openForm} setOpen={setOpenForm}/>}
+         
         <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/>
        {/* <MenuItem> <Auction open={openForm} setOpen={setOpenForm}/> </MenuItem>
        <MenuItem> <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/> </MenuItem> */}
@@ -63,7 +91,9 @@ function SidebarComp() {
       <hr />
       {/* <SubMenu Icon={AddIcon} addChannelOption title="Add Channel"> 
         */}
-      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
+        {  user.email === "asilwana30@gmail.com"&&
+      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />}
+      <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
       {channels?.docs.map((doc) => (
         //  <MenuItem key={doc.id} id={doc.id} title={doc.data().name}>
          <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import { FormContainer, TextFieldElement } from "react-hook-form-mui";
 import { Box } from "@material-ui/core";
-import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -14,13 +14,29 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import styled from "styled-components";
-
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 export default function Auction({ open, setOpen }) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("lg"));
   const [imgUrl, setImgUrl] = useState(null);
   const [progresspercent, setProgresspercent] = useState(0);
+  const [user] = useAuthState(auth);
+  const [catagoryData, setCatagories] = useState([]);
+  const [selectedValue, setSelectedValue] = useState('')
 
+  useEffect(() => {
+    let dataCatagory = [];
+    db.collection("catagories").onSnapshot((snapshot) =>
+    snapshot.docs.map((doc) => {
+      dataCatagory.push({ id: doc.id, data: doc.data() });
+      return doc.data();
+    })
+    );
+    setCatagories(dataCatagory);
+  }, []);
+  
+  console.log("catagories -dfd", catagoryData)
   useEffect(() => {
     db.collection("users")
       .get()
@@ -39,6 +55,15 @@ export default function Auction({ open, setOpen }) {
     setOpen(true);
   };
 
+  // const handleCategoryChange = (e) => {
+    
+  //     setSelectedValue(e.target.value)
+  //     if(selectedValue === 'Products'){
+  //       const [auctionDetails] = useDocument(id && db.collection("auctions").doc(id));
+  //     }else{
+
+  //     }
+  // }
   const handleChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -74,7 +99,9 @@ export default function Auction({ open, setOpen }) {
     productImage,
     productLocation,
     productName,
-    productPrice
+    productPrice,
+    currentBid,
+    currentBidder
   ) => {
     db.collection("auctions")
       .add({
@@ -88,6 +115,8 @@ export default function Auction({ open, setOpen }) {
         productLocation: productLocation,
         productName: productName,
         productPrice: productPrice,
+        currentBid: productPrice,
+        currentBidder: "",
       })
       .then(async (docRef) => {
         db.collection("rooms")
@@ -112,7 +141,11 @@ export default function Auction({ open, setOpen }) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}  sx={{ color: "white"}}>
+      <Button
+        variant="outlined"
+        onClick={handleClickOpen}
+        sx={{ color: "white" }}
+      >
         Create Auction
       </Button>
       <Dialog open={open} onClose={handleClose} fullScreen={fullScreen}>
@@ -121,37 +154,49 @@ export default function Auction({ open, setOpen }) {
           <FormContainer
             defaultValues={{ auctionDate: "" }}
             onSubmit={(data) => {
-              createAuction(
-                data.auctionId,
-                data.auctionDate,
-                data.auctionEndTime,
-                data.auctionStartTime,
-                data.auctionTitle,
-                data.productDescription,
-                imgUrl,
-                data.productLocation,
-                data.productName,
-                data.productPrice
-              );
+              try {
+                createAuction(
+                  data.auctionId,
+                  data.auctionDate,
+                  data.auctionEndTime,
+                  data.auctionStartTime,
+                  data.auctionTitle,
+                  data.productDescription,
+                  imgUrl,
+                  data.productLocation,
+                  data.productName,
+                  data.productPrice,
+                  data.currentBid,
+                  data.currentBidder
+                );
+              } catch (error) {
+                alert(error);
+              }
             }}
             onSuccess={(data) => {
-              createAuction(
-                data.auctionId,
-                data.auctionDate,
-                data.auctionEndTime,
-                data.auctionStartTime,
-                data.auctionTitle,
-                data.productDescription,
-                imgUrl,
-                data.productLocation,
-                data.productName,
-                data.productPrice
-              );
+              try {
+                createAuction(
+                  data.auctionId,
+                  data.auctionDate,
+                  data.auctionEndTime,
+                  data.auctionStartTime,
+                  data.auctionTitle,
+                  data.productDescription,
+                  imgUrl,
+                  data.productLocation,
+                  data.productName,
+                  data.productPrice,
+                  data.currentBid,
+                  data.currentBidder
+                );
+              } catch (error) {
+                alert(error);
+              }
             }}
           >
             <Box>
               <TextFieldElement
-                name="Auction Id"
+                name="auctionId"
                 label="Auction Id"
                 required
                 variant="standard"
@@ -167,7 +212,7 @@ export default function Auction({ open, setOpen }) {
               />
               <TextFieldElement
                 name="auctionStartTime"
-                label="Auction Start Time:"
+                label="Auction Start Time in hours"
                 required
                 type={"time"}
                 variant="standard"
@@ -175,7 +220,7 @@ export default function Auction({ open, setOpen }) {
               />
               <TextFieldElement
                 name="auctionEndTime"
-                label="Auction End Time:"
+                label="Auction End Time in hours"
                 required
                 type={"time"}
                 variant="standard"
@@ -196,7 +241,20 @@ export default function Auction({ open, setOpen }) {
                 sx={{ m: 1, mt: 3, width: "25ch" }}
               />
               <input type="file" accept="image/*" onChange={handleChange} />
-              
+               <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedValue}
+                  label="Category"
+                  // onChange={handleCategoryChange}
+                >
+                  {catagoryData?.map((category)=>
+                    <MenuItem value={category?.id}>{category?.data?.categoryName}</MenuItem>)
+                  }
+                </Select>
+              </FormControl>
               <TextFieldElement
                 name="productDescription"
                 label="Product Description"
@@ -230,6 +288,4 @@ export default function Auction({ open, setOpen }) {
   );
 }
 
-const createAuctionContainer = styled.div`
-
-`
+const createAuctionContainer = styled.div``;
