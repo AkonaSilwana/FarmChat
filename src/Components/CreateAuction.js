@@ -222,13 +222,7 @@ export default function Auction({ open, setOpen }) {
             }}
           >
             <Box>
-              <TextFieldElement
-                name="auctionId"
-                label="Auction Id"
-                required
-                variant="standard"
-                sx={{ m: 1, mt: 3, width: "25ch" }}
-              />
+             
               <TextFieldElement
                 name="auctionDate"
                 label="Auction Date: "
