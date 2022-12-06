@@ -24,7 +24,7 @@ function CurrentUsers({ pressOpen, makeOpen }) {
     
   const [authUsers , getAuthUsers] = useState([])
 
-   console.log('users', authUsers)
+   
   useEffect(() => {
     let usersData = [];
     db.collection("users").onSnapshot((snapshot) =>
@@ -35,7 +35,7 @@ function CurrentUsers({ pressOpen, makeOpen }) {
     );
     getAuthUsers(usersData);
   }, []);
-
+ console.log('users', authUsers)
 
   return (
   
@@ -51,7 +51,7 @@ function CurrentUsers({ pressOpen, makeOpen }) {
             <ThemeProvider theme={defaultMaterialTheme}>
               {authUsers?.map((theUsers) => {
         return (
-          <div key={theUsers?.name} style={{ display: "flex" ,height:"30px", width:"30px", padding: "10px"}}>
+          <div key={theUsers?.name} style={{ display: "flex" ,height:"30px", width:"30px", padding: "20px"}}>
             <img src={theUsers?.photo} alt="" />
             <span style={{ display: "flex"}}>{theUsers?.name}</span>
           </div>

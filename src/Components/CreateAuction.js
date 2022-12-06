@@ -5,7 +5,6 @@ import { Box } from "@material-ui/core";
 import {
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
   FormControl,
   Select,
@@ -15,7 +14,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useDocument } from "react-firebase-hooks/firestore";
+
 import { storage, db } from "../firebase";
 import {
   ref as refStorage,
@@ -30,7 +29,7 @@ export default function Auction({ open, setOpen }) {
   const fullScreen = useMediaQuery(theme.breakpoints.down("lg"));
   const [imgUrl, setImgUrl] = useState(null);
   const [progresspercent, setProgresspercent] = useState(0);
-  const [user] = useAuthState(auth);
+
   const [catagoryData, setCatagories] = useState([]);
   const [productData, setProducts] = useState([]);
   const [animalData, setAnimals] = useState([]);
@@ -222,13 +221,6 @@ export default function Auction({ open, setOpen }) {
             }}
           >
             <Box>
-              <TextFieldElement
-                name="auctionId"
-                label="Auction Id"
-                required
-                variant="standard"
-                sx={{ m: 1, mt: 3, width: "25ch" }}
-              />
               <TextFieldElement
                 name="auctionDate"
                 label="Auction Date: "
