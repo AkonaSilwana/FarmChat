@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CreateIcon from "@material-ui/icons/Create";
@@ -10,7 +10,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import {Sidebar, SubMenu, Menu, MenuItem} from 'react-pro-sidebar'
+import { Sidebar, SubMenu, Menu, MenuItem } from "react-pro-sidebar";
 import Auction from "./CreateAuction";
 import { useState } from "react";
 import { NoEncryption } from "@material-ui/icons";
@@ -19,91 +19,51 @@ import ListOfAuctions from "./ListOfAuctions";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-
+import { height } from "@mui/system";
 
 function SidebarComp() {
   const [channels] = useCollection(db.collection("rooms"));
   const [openForm, setOpenForm] = useState(false);
   const [user] = useAuthState(auth);
- const [openTable, setOpenTable] = useState(false);
-//  const [userDetals] = useCollection(db.collection("users"));
-
-//  console.log("hey user", userDetals)
-   
-//  const auth = getAuth();
-//   const [authUsers , getAuthUsers] = useState([])
-
+  const [openTable, setOpenTable] = useState(false);
+  const [openPeople, setOpenPeople] = useState(false);
  
-//   useEffect(() => {
-//     let usersData = [];
-//     db.collection("users").onSnapshot((snapshot) =>
-//       snapshot.docs.map((doc) => {
-//         usersData.push(doc.data());
-//         return doc.data();
-//       })
-//     );
-//     getAuthUsers(usersData);
-//   }, []);
-//     console.log('users', authUsers)
-   
-  return (
-   
-      <SidebarContainer>
-       
-       <SidebarHeader>
-        <SidebarInfo> 
+   return (
+    <SidebarContainer>
+      <SidebarHeader>
+        <SidebarInfo>
           <h2>FARM MARKET</h2>
           <h3>
             <FiberManualRecordIcon />
             {user.displayName}
           </h3>
-          </SidebarInfo> 
+        </SidebarInfo>
         <CreateIcon />
-       </SidebarHeader> 
-      {/* <Sidebar >
-      <Menu style={{backgroundColor:'#0a8d48', color:'white',}}> */}
+      </SidebarHeader>
+
       <hr />
-      {/* <SubMenu Icon={PeopleAltIcon} title="People" >
-        {users?.docs.map((doc) => (
-          <MenuItem key={doc.id} id={doc.uid} title={doc.data().displayName}></MenuItem>
-        ))}
-        </SubMenu> */}
-        <SidebarOption Icon={PeopleAltIcon} title="People" />
-        
-         {/* {authUsers?.docs.map((theUsers) => (
-          <>
-          <span>{theUsers?.data?.photoUrl}</span>
-          <span>{theUsers?.data?.displayName}</span> 
-          </> 
-        ))} */}
-         
+
+      <SidebarOption Icon={PeopleAltIcon} title="People" />
+
+      
+        <CurrentUsers pressOpen={openPeople} makeOpen={setOpenPeople} />
       <hr />
-      {/* <SubMenu Icon={ExpandMoreIcon} title="Auction"> */}
-       <SidebarOption Icon={ExpandMoreIcon} title="Auctions" />
-       {  user.email === "asilwana30@gmail.com"&&
-       <Auction open={openForm} setOpen={setOpenForm}/>}
-         
-        <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/>
-       {/* <MenuItem> <Auction open={openForm} setOpen={setOpenForm}/> </MenuItem>
-       <MenuItem> <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable}/> </MenuItem> */}
-       {/* <MenuItem><Link to="/ListOfAuctions"><Button>List Of Auction</Button></Link></MenuItem> */}
-        {/* </SubMenu> */}
-      <hr />
-      {/* <SubMenu Icon={AddIcon} addChannelOption title="Add Channel"> 
-        */}
-        {  user.email === "asilwana30@gmail.com"&&
-      <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />}
+
+      <SidebarOption Icon={ExpandMoreIcon} title="Auctions" />
+      {user.email === "asilwana30@gmail.com" && (
+        <Auction open={openForm} setOpen={setOpenForm} />
+      )}
+
+      <ListOfAuctions clickOpen={openTable} getOpen={setOpenTable} />
+
+      {user.email === "asilwana30@gmail.com" && (
+        <SidebarOption Icon={AddIcon} addChannelOption title="Add Channel" />
+      )}
       <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
       {channels?.docs.map((doc) => (
-        //  <MenuItem key={doc.id} id={doc.id} title={doc.data().name}>
-         <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
-        // </MenuItem>
+        <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
       ))}
-     {/* </SubMenu>
-      </Menu> */}
-      {/* </Sidebar> */}
-    </SidebarContainer> 
-    
+    </SidebarContainer>
   );
 }
 
