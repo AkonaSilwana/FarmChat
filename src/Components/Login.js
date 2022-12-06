@@ -34,6 +34,7 @@ function Login() {
 
         <h1>WELCOME TO OUR FARM MARKET</h1>
         <Button onClick={signIn}> Sign In with google</Button>
+        <div class="g-recaptcha" data-sitekey="6LcrMlojAAAAAPK5NiRPzfu03OQtYHPiQQDUK3B"></div>
       </LoginInnerContainer>
     </LoginContainer>
   );

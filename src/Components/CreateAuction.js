@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import { FormContainer, TextFieldElement } from "react-hook-form-mui";
 import { Box } from "@material-ui/core";
-import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -22,6 +22,21 @@ export default function Auction({ open, setOpen }) {
   const [imgUrl, setImgUrl] = useState(null);
   const [progresspercent, setProgresspercent] = useState(0);
   const [user] = useAuthState(auth);
+  const [catagoryData, setCatagories] = useState([]);
+  const [selectedValue, setSelectedValue] = useState('')
+
+  useEffect(() => {
+    let dataCatagory = [];
+    db.collection("catagories").onSnapshot((snapshot) =>
+    snapshot.docs.map((doc) => {
+      dataCatagory.push({ id: doc.id, data: doc.data() });
+      return doc.data();
+    })
+    );
+    setCatagories(dataCatagory);
+  }, []);
+  
+  console.log("catagories -dfd", catagoryData)
   useEffect(() => {
     db.collection("users")
       .get()
@@ -40,6 +55,15 @@ export default function Auction({ open, setOpen }) {
     setOpen(true);
   };
 
+  // const handleCategoryChange = (e) => {
+    
+  //     setSelectedValue(e.target.value)
+  //     if(selectedValue === 'Products'){
+  //       const [auctionDetails] = useDocument(id && db.collection("auctions").doc(id));
+  //     }else{
+
+  //     }
+  // }
   const handleChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -217,7 +241,20 @@ export default function Auction({ open, setOpen }) {
                 sx={{ m: 1, mt: 3, width: "25ch" }}
               />
               <input type="file" accept="image/*" onChange={handleChange} />
-
+               <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedValue}
+                  label="Category"
+                  // onChange={handleCategoryChange}
+                >
+                  {catagoryData?.map((category)=>
+                    <MenuItem value={category?.id}>{category?.data?.categoryName}</MenuItem>)
+                  }
+                </Select>
+              </FormControl>
               <TextFieldElement
                 name="productDescription"
                 label="Product Description"

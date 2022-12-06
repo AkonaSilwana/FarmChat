@@ -2,22 +2,10 @@ import React, { useEffect } from 'react'
 import { getAuth } from "firebase/auth";
 import { db } from "../firebase";
 import { useState } from "react";
-function CurrentUsers({photoURL, displayName}) {
+function CurrentUsers() {
     const auth = getAuth();
   const [authUsers , getAuthUsers] = useState([])
-//  React.useEffect(() => {
-//     db.collection("users")
-//       .get()
-//       .then((resp) => {
-//         // get all users
-//         console.log(
-//           " ~ users ~ resp",
-//           resp.docs.map((doc) => {
-//             doc.data();
-//           })
-//         );
-//       });
-//   }, []);
+
    console.log('users', authUsers)
   useEffect(() => {
     let usersData = [];
@@ -32,7 +20,10 @@ function CurrentUsers({photoURL, displayName}) {
 
 
   return (
-    <div>{authUsers.photoURL}{authUsers.displayName}</div>
+    // { authUsers?.docs.map((doc) => (
+      <div>{authUsers.photoURL}{authUsers.displayName}</div>
+    // ))}
+    
   )
 }
 
