@@ -63,7 +63,7 @@ function AuctionLink() {
   };
   console.log("Hey countdown", getCountDown);
 
-  const Completionist = () => <span>The winner is Anathi Makamane!</span>;
+  const Completionist = () => <span>The winner is Nolwaz Pearl Nkosi!</span>;
 
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -97,6 +97,7 @@ function AuctionLink() {
               Product Name: {auctionDetails?.data()?.productDescription}
             </p>
             <h4>Product price: {auctionDetails?.data()?.productPrice}</h4>
+             <h4>Product location: {auctionDetails?.data()?.productLocation}</h4>
 
             <h3>Bid amount: {auctionDetails?.data()?.currentBid} </h3>
             <h3>Current Bidder: {auctionDetails?.data()?.currentBidder} </h3>
@@ -120,7 +121,7 @@ function AuctionLink() {
             {/* <h4>Auction ends in: {getCountDown(timeInBetween)} </h4> */}
             <h4>Auction ends in: </h4>
             <Countdown
-              date={Date.now(auctionDetails?.data().auctionStartTime) + 400000}
+              date={Date.now(auctionDetails?.data().auctionStartTime) + 300000}
               renderer={renderer}
             >
               <h6>Auction Ended</h6>
