@@ -63,7 +63,7 @@ function AuctionLink() {
   };
   console.log("Hey countdown", getCountDown);
 
-  const Completionist = () => <span>The winner is Nolwazi Pearl Nkosi!</span>;
+  const Completionist = () => <span>The winner is Nolwaz Pearl Nkosi!</span>;
 
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
