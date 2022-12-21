@@ -19,8 +19,9 @@ You may also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
- ![farmMarket](https://user-images.githubusercontent.com/109544433/198935788-526d11b6-7dac-4007-bf74-8be90e42d331.png)
+### `npm run build`![form auction data](https://user-images.githubusercontent.com/109544433/208805181-23bc5a9e-2491-49b2-91c3-0a8dafc7242c.png)
+
+ 
 
 Builds the app for production to the `buil![farmMarket](https://user-images.githubusercontent.com/109544433/198935523-56264e93-6cec-4de3-9d89-4dfe5e056e63.png)
 d` folder.\
