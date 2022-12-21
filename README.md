@@ -21,7 +21,7 @@ You may also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`![form auction data](https://user-images.githubusercontent.com/109544433/208805181-23bc5a9e-2491-49b2-91c3-0a8dafc7242c.png)
+### `npm run build`
 
  
 
