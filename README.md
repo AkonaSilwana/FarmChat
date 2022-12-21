@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
+![Farmmarket login screen](https://user-images.githubusercontent.com/109544433/208805389-55e18aa2-31dd-4003-89d7-e72006f1d5dc.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -23,7 +25,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
  
 
-Builds the app for production to the `buil![farmMarket](https://user-images.githubusercontent.com/109544433/198935523-56264e93-6cec-4de3-9d89-4dfe5e056e63.png)
+Builds the app for production to the 
 d` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
